@@ -157,7 +157,8 @@ function setupGate() {
 
     // Intention chip selection
     chips.forEach(chip => {
-        chip.addEventListener('click', () => {
+        chip.addEventListener('click', (e) => {
+            e.stopPropagation();
             chips.forEach(c => c.classList.remove('selected'));
             chip.classList.add('selected');
             freeInput.value = '';
@@ -167,6 +168,7 @@ function setupGate() {
     });
 
     // Free text input
+    freeInput.addEventListener('click', (e) => e.stopPropagation());
     freeInput.addEventListener('input', () => {
         if (freeInput.value.trim()) {
             chips.forEach(c => c.classList.remove('selected'));
