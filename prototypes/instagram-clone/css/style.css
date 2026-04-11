@@ -34,25 +34,13 @@ html, body {
 
 .phone-frame {
     position: relative;
-    width: 375px;
-    height: 812px;
-    margin: 30px auto;
+    width: 405px;
+    height: 878px;
+    margin: 60px auto;
     border-radius: 50px;
     background: #1a1a1a;
     padding: 14px;
     box-shadow: 0 0 0 3px #333, 0 30px 80px rgba(0,0,0,0.6);
-}
-
-.phone-notch {
-    position: absolute;
-    top: 14px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 150px;
-    height: 28px;
-    background: #1a1a1a;
-    border-radius: 0 0 18px 18px;
-    z-index: 200;
 }
 
 .phone-screen {
@@ -90,7 +78,8 @@ html, body {
         box-shadow: none;
         background: var(--bg);
     }
-    .phone-notch, .phone-home-indicator { display: none; }
+    .phone-notch { display: none; }
+    .phone-home-indicator { display: none; }
     .phone-screen { border-radius: 0; }
 }
 
