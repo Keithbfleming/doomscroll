@@ -50,6 +50,7 @@
                                 <span class="breakdown-detail">10 min</span>
                                 <span class="breakdown-earned">+2</span>
                             </div>
+                            <button class="breakdown-link" id="changeActivitiesBtn">Change activities</button>
                         </div>
                     </div>
 
@@ -90,6 +91,27 @@
                             <button class="confirm-btn cancel" id="confirmCancel">Cancel</button>
                             <button class="confirm-btn go" id="confirmGo">Continue</button>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Earning Activities Modal -->
+                <div class="modal-overlay" id="activitiesModal">
+                    <div class="modal-sheet">
+                        <h3 class="modal-title">Your earning activities</h3>
+                        <div class="modal-item">
+                            <span class="modal-check">✓</span>
+                            <span>Steps</span>
+                        </div>
+                        <div class="modal-item">
+                            <span class="modal-check">✓</span>
+                            <span>Active minutes</span>
+                        </div>
+                        <div class="modal-item">
+                            <span class="modal-check">✓</span>
+                            <span>Mindfulness</span>
+                        </div>
+                        <p class="modal-note">You can change these anytime.</p>
+                        <button class="modal-close-btn" id="modalCloseBtn">Close</button>
                     </div>
                 </div>
             </div>

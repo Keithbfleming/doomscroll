@@ -155,6 +155,28 @@ function setupGate() {
         card.classList.toggle('expanded');
     });
 
+    // Activities modal
+    const modal = document.getElementById('activitiesModal');
+    const modalClose = document.getElementById('modalCloseBtn');
+    const changeBtn = document.getElementById('changeActivitiesBtn');
+    const viewBtn = document.getElementById('viewActivitiesBtn');
+
+    function openModal(e) {
+        e.stopPropagation();
+        modal.classList.add('visible');
+    }
+
+    changeBtn.addEventListener('click', openModal);
+    viewBtn.addEventListener('click', openModal);
+
+    modalClose.addEventListener('click', () => {
+        modal.classList.remove('visible');
+    });
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.classList.remove('visible');
+    });
+
     // Intention chip selection
     chips.forEach(chip => {
         chip.addEventListener('click', (e) => {
