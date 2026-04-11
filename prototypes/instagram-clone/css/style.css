@@ -629,3 +629,74 @@ html, body {
     border-color: var(--accent);
     background: #e8f4fd;
 }
+
+/* Confirmation Dialog */
+.confirm-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 400;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s, visibility 0.2s;
+}
+
+.confirm-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.confirm-dialog {
+    background: var(--surface);
+    border-radius: 16px;
+    padding: 24px;
+    margin: 0 32px;
+    width: 100%;
+    transform: scale(0.95);
+    transition: transform 0.2s ease;
+}
+
+.confirm-overlay.visible .confirm-dialog {
+    transform: scale(1);
+}
+
+.confirm-text {
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--text);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.confirm-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.confirm-btn {
+    flex: 1;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: var(--font);
+    cursor: pointer;
+}
+
+.confirm-btn.cancel {
+    background: #efefef;
+    color: var(--text);
+}
+
+.confirm-btn.go {
+    background: var(--accent);
+    color: #fff;
+}
+
+.confirm-btn:active {
+    opacity: 0.8;
+}

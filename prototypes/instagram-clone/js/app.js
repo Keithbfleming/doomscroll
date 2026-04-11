@@ -187,6 +187,34 @@ function setupGate() {
             openBtn.disabled = true;
         }
     }
+
+    // Open Instagram button → show confirmation
+    const overlay = document.getElementById('confirmOverlay');
+    const cancelBtn = document.getElementById('confirmCancel');
+    const goBtn = document.getElementById('confirmGo');
+
+    openBtn.addEventListener('click', () => {
+        document.getElementById('confirmMinutes').textContent = document.getElementById('balanceNumber').textContent;
+        overlay.classList.add('visible');
+    });
+
+    cancelBtn.addEventListener('click', () => {
+        overlay.classList.remove('visible');
+    });
+
+    // Confirm → transition to Instagram feed
+    goBtn.addEventListener('click', () => {
+        overlay.classList.remove('visible');
+        const gate = document.getElementById('gateScreen');
+        const igApp = document.getElementById('igApp');
+
+        gate.classList.add('hidden');
+        igApp.style.display = 'flex';
+
+        setTimeout(() => {
+            gate.style.display = 'none';
+        }, 500);
+    });
 }
 
 // ── stories ──
