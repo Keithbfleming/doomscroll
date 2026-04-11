@@ -265,7 +265,7 @@ function wirePost(el, origLikes, isVideo) {
 function loadPosts() {
     if (loading) return;
     loading = true;
-    document.getElementById('loader').style.display = 'flex';
+    document.getElementById('loader').style.opacity = '1';
 
     setTimeout(() => {
         const feed = document.getElementById('feed');
@@ -274,18 +274,17 @@ function loadPosts() {
         feed.appendChild(frag);
         postCount += 8;
         loading = false;
-        document.getElementById('loader').style.display = 'none';
+        document.getElementById('loader').style.opacity = '0';
     }, postCount === 0 ? 200 : 500);
 }
 
 // ── infinite scroll ──
 function setupInfiniteScroll() {
     const scrollArea = document.getElementById('scrollArea');
-    const loader = document.getElementById('loader');
 
-    const obs = new IntersectionObserver(entries => {
-        if (entries[0].isIntersecting && !loading) loadPosts();
-    }, { root: scrollArea, rootMargin: '600px' });
-
-    obs.observe(loader);
+    scrollArea.addEventListener('scroll', () => {
+        if (loading) return;
+        const nearBottom = scrollArea.scrollHeight - scrollArea.scrollTop - scrollArea.clientHeight < 500;
+        if (nearBottom) loadPosts();
+    }, { passive: true });
 }

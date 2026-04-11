@@ -341,7 +341,7 @@ html, body {
    LOADER
    ══════════════════════════════════ */
 
-.loader { display: flex; justify-content: center; padding: 20px 0 80px; }
+.loader { display: flex; justify-content: center; padding: 20px 0 80px; opacity: 0; transition: opacity 0.3s; }
 .spinner {
     width: 24px; height: 24px;
     border: 2px solid var(--border);
