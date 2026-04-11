@@ -433,6 +433,53 @@ html, body {
     height: 100%;
 }
 
+/* Session Timer Bar */
+.session-timer {
+    height: 28px;
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+}
+
+.timer-bar-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background: var(--accent);
+    opacity: 0.15;
+    transition: width 1s linear;
+}
+
+.timer-text {
+    position: relative;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: 0.3px;
+    z-index: 1;
+}
+
+.session-timer.overtime {
+    background: #fff0f0;
+}
+
+.session-timer.overtime .timer-bar-fill {
+    background: var(--like);
+    width: 100% !important;
+    opacity: 0.15;
+}
+
+.session-timer.overtime .timer-text {
+    color: var(--like);
+}
+
 /* Balance Card */
 .balance-card {
     width: 100%;

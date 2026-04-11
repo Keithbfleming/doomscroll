@@ -132,6 +132,8 @@ function seededRand(n) {
 // ── state ──
 let postCount = 0;
 let loading = false;
+let balanceSeconds = 12 * 60; // 12 minutes in seconds
+let sessionInterval = null;
 
 // ── init ──
 document.addEventListener('DOMContentLoaded', () => {
@@ -202,7 +204,7 @@ function setupGate() {
         overlay.classList.remove('visible');
     });
 
-    // Confirm → transition to Instagram feed
+    // Confirm → transition to Instagram feed + start timer
     goBtn.addEventListener('click', () => {
         overlay.classList.remove('visible');
         const gate = document.getElementById('gateScreen');
@@ -214,7 +216,34 @@ function setupGate() {
         setTimeout(() => {
             gate.style.display = 'none';
         }, 500);
+
+        startSessionTimer();
     });
+}
+
+// ── session timer ──
+function startSessionTimer() {
+    const timerEl = document.getElementById('sessionTimer');
+    const fillEl = document.getElementById('timerBarFill');
+    const textEl = document.getElementById('timerText');
+    const totalSeconds = balanceSeconds;
+
+    sessionInterval = setInterval(() => {
+        balanceSeconds--;
+
+        if (balanceSeconds >= 0) {
+            const mins = Math.floor(balanceSeconds / 60);
+            const secs = balanceSeconds % 60;
+            textEl.textContent = `${mins}:${secs.toString().padStart(2, '0')} remaining`;
+            fillEl.style.width = `${(balanceSeconds / totalSeconds) * 100}%`;
+        } else {
+            // Overtime
+            const overMins = Math.floor(Math.abs(balanceSeconds) / 60);
+            const overSecs = Math.abs(balanceSeconds) % 60;
+            textEl.textContent = `${overMins}:${overSecs.toString().padStart(2, '0')} overtime`;
+            timerEl.classList.add('overtime');
+        }
+    }, 1000);
 }
 
 // ── stories ──
