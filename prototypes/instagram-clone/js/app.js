@@ -101,16 +101,26 @@ const STORY_USERS = [
 ];
 
 const VIDEOS = [
-    'https://videos.pexels.com/video-files/3571264/3571264-sd_506_960_30fps.mp4',
-    'https://videos.pexels.com/video-files/1093662/1093662-hd_1920_1080_30fps.mp4',
-    'https://videos.pexels.com/video-files/856973/856973-hd_1920_1080_30fps.mp4',
-    'https://videos.pexels.com/video-files/2491284/2491284-hd_1920_1080_24fps.mp4',
-    'https://videos.pexels.com/video-files/3209828/3209828-sd_506_960_25fps.mp4',
-    'https://videos.pexels.com/video-files/1580507/1580507-hd_1920_1080_30fps.mp4',
-    'https://videos.pexels.com/video-files/2795173/2795173-hd_1920_1080_30fps.mp4',
-    'https://videos.pexels.com/video-files/4763824/4763824-sd_506_960_24fps.mp4',
-    'https://videos.pexels.com/video-files/5752729/5752729-sd_506_960_25fps.mp4',
-    'https://videos.pexels.com/video-files/3048163/3048163-sd_506_960_25fps.mp4',
+    'https://assets.mixkit.co/videos/1164/1164-720.mp4',
+    'https://assets.mixkit.co/videos/4883/4883-720.mp4',
+    'https://assets.mixkit.co/videos/34563/34563-720.mp4',
+    'https://assets.mixkit.co/videos/34487/34487-720.mp4',
+    'https://assets.mixkit.co/videos/34404/34404-720.mp4',
+    'https://assets.mixkit.co/videos/51585/51585-720.mp4',
+    'https://assets.mixkit.co/videos/52178/52178-720.mp4',
+    'https://assets.mixkit.co/videos/41587/41587-720.mp4',
+    'https://assets.mixkit.co/videos/28780/28780-720.mp4',
+    'https://assets.mixkit.co/videos/22712/22712-720.mp4',
+    'https://assets.mixkit.co/videos/4394/4394-720.mp4',
+    'https://assets.mixkit.co/videos/18289/18289-720.mp4',
+    'https://assets.mixkit.co/videos/32809/32809-720.mp4',
+    'https://assets.mixkit.co/videos/3089/3089-720.mp4',
+    'https://assets.mixkit.co/videos/1943/1943-720.mp4',
+    'https://assets.mixkit.co/videos/42464/42464-720.mp4',
+    'https://assets.mixkit.co/videos/28398/28398-720.mp4',
+    'https://assets.mixkit.co/videos/12982/12982-720.mp4',
+    'https://assets.mixkit.co/videos/40813/40813-720.mp4',
+    'https://assets.mixkit.co/videos/4063/4063-720.mp4',
 ];
 
 // ── helpers ──
@@ -154,9 +164,9 @@ function createPost(i) {
     const likes = Math.floor(seededRand(i) * 48000) + 127;
     const comments = Math.floor(seededRand(i + 500) * 480) + 3;
 
-    // Video every 4th post
-    const isVideo = i % 4 === 2;
-    const videoSrc = VIDEOS[Math.floor(i / 4) % VIDEOS.length];
+    // Every other post is a video (~50%)
+    const isVideo = i % 2 === 1;
+    const videoSrc = VIDEOS[Math.floor(i / 2) % VIDEOS.length];
 
     // Vary aspect ratio
     const isPortrait = !isVideo && i % 5 === 3;
