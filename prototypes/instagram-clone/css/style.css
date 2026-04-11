@@ -387,3 +387,123 @@ html, body {
     .heart-pop.show { animation: none; }
     .action-btn.liked { animation: none; }
 }
+
+/* ══════════════════════════════════
+   GATE SCREEN
+   ══════════════════════════════════ */
+
+.gate {
+    position: absolute;
+    inset: 0;
+    background: #fafafa;
+    z-index: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.gate.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.gate-inner {
+    width: 100%;
+    padding: 0 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+}
+
+.gate-brand {
+    font-family: 'Grand Hotel', cursive;
+    font-size: 36px;
+    color: var(--text);
+    text-align: center;
+}
+
+/* ig-app wrapper */
+.ig-app {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+/* Balance Card */
+.balance-card {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    cursor: pointer;
+    text-align: center;
+    transition: box-shadow 0.2s;
+}
+
+.balance-card:active {
+    box-shadow: 0 0 0 2px rgba(0,0,0,0.08);
+}
+
+.balance-main {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 6px;
+}
+
+.balance-number {
+    font-size: 56px;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--text);
+}
+
+.balance-label {
+    font-size: 24px;
+    font-weight: 300;
+    color: var(--text-light);
+}
+
+.balance-chevron {
+    font-size: 20px;
+    color: var(--text-light);
+    margin-left: 4px;
+    transition: transform 0.25s ease;
+}
+
+.balance-sublabel {
+    font-size: 15px;
+    color: var(--text-light);
+    margin-top: 4px;
+    letter-spacing: 0.5px;
+}
+
+/* Open Instagram Button */
+.gate-open-btn {
+    width: 100%;
+    padding: 16px;
+    border-radius: 12px;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: var(--font);
+    cursor: pointer;
+    transition: background 0.2s, opacity 0.2s;
+    background: var(--accent);
+    color: #fff;
+}
+
+.gate-open-btn.disabled {
+    background: #b2dffc;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.gate-open-btn:not(.disabled):active {
+    opacity: 0.85;
+}
