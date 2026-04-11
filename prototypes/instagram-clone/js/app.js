@@ -45,28 +45,16 @@ const CAPTIONS = [
     "You've been scrolling for a while. Here's a sunset as a reward 🌅",
 ];
 
-const IMAGE_GRADIENTS = [
-    'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-    'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-    'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-    'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
-    'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
-    'linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)',
-    'linear-gradient(135deg, #fccb90 0%, #d57eeb 100%)',
-    'linear-gradient(135deg, #30cfd0 0%, #330867 100%)',
-    'linear-gradient(135deg, #c471f5 0%, #fa71cd 100%)',
-    'linear-gradient(135deg, #48c6ef 0%, #6f86d6 100%)',
-    'linear-gradient(135deg, #feada6 0%, #f5efef 100%)',
-    'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
-    'linear-gradient(135deg, #d299c2 0%, #fef9d7 100%)',
-    'linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%)',
-    'linear-gradient(135deg, #fddb92 0%, #d1fdff 100%)',
-    'linear-gradient(135deg, #9890e3 0%, #b1f4cf 100%)',
-    'linear-gradient(135deg, #ebc0fd 0%, #d9ded8 100%)',
-    'linear-gradient(135deg, #f6d365 0%, #fda085 100%)',
-    'linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%)',
-    'linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%)',
-];
+// Seeded picsum URLs give consistent images per post
+function postImageStyle(index) {
+    const seed = index + 100;
+    return `background-image: url('https://picsum.photos/seed/${seed}/600/600'); background-color: #efefef;`;
+}
+
+function postImageStyleLandscape(index) {
+    const seed = index + 100;
+    return `background-image: url('https://picsum.photos/seed/${seed}/800/600'); background-color: #efefef;`;
+}
 
 const TIMESTAMPS = [
     '2 minutes ago', '5 minutes ago', '12 minutes ago', '28 minutes ago',
@@ -113,8 +101,7 @@ function renderStories() {
         storyEl.className = `story-item${viewed ? ' viewed' : ''}`;
         storyEl.innerHTML = `
             <div class="story-ring">
-                <div class="story-avatar" style="background: ${user.color};">
-                    <span class="avatar-initial">${user.username[0].toUpperCase()}</span>
+                <div class="story-avatar" style="background-image: url('https://picsum.photos/seed/story${i}/80/80'); background-color: ${user.color};">
                 </div>
             </div>
             <span class="story-username">${user.username}</span>
@@ -130,7 +117,6 @@ function renderStories() {
 function createPost(index) {
     const user = USERS[index % USERS.length];
     const caption = CAPTIONS[index % CAPTIONS.length];
-    const gradient = IMAGE_GRADIENTS[index % IMAGE_GRADIENTS.length];
     const timestamp = TIMESTAMPS[Math.min(index, TIMESTAMPS.length - 1)];
     const likes = Math.floor(Math.random() * 50000) + 100;
     const comments = Math.floor(Math.random() * 500) + 1;
@@ -140,8 +126,7 @@ function createPost(index) {
     post.className = 'post';
     post.innerHTML = `
         <div class="post-header">
-            <div class="post-avatar" style="background: ${user.color};">
-                ${user.username[0].toUpperCase()}
+            <div class="post-avatar" style="background-image: url('https://picsum.photos/seed/user${index % USERS.length}/64/64'); background-size: cover; background-color: ${user.color};">
             </div>
             <div class="post-user-info">
                 <div class="post-username">${user.username}</div>
@@ -149,7 +134,7 @@ function createPost(index) {
             </div>
             <button class="post-more-btn" aria-label="More options">•••</button>
         </div>
-        <div class="post-image-container${isLandscape ? ' landscape' : ''}" style="background: ${gradient};" data-post-index="${index}">
+        <div class="post-image-container${isLandscape ? ' landscape' : ''}" style="${isLandscape ? postImageStyleLandscape(index) : postImageStyle(index)}" data-post-index="${index}">
             <div class="heart-overlay">
                 <svg width="80" height="80" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="1">
                     <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
