@@ -2,92 +2,192 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no, maximum-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="DoomScroll">
-    <title>DoomScroll</title>
+    <meta name="apple-mobile-web-app-title" content="Instagram">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="description" content="DoomScroll — Instagram prototype with scroll interventions">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23E1306C' width='100' height='100' rx='22'/><text x='50' y='68' text-anchor='middle' fill='white' font-size='50'>📱</text></svg>">
+    <title>Instagram</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <!-- iOS Status Bar Spacer -->
-    <div class="status-bar-spacer"></div>
 
-    <!-- App Header -->
-    <header class="app-header">
-        <div class="header-logo">
-            <svg width="103" height="29" viewBox="0 0 103 29" fill="none">
-                <text x="0" y="24" font-family="'Georgia', serif" font-size="24" font-style="italic" fill="#262626">DoomScroll</text>
-            </svg>
-        </div>
-        <div class="header-actions">
-            <button class="header-btn" aria-label="Notifications">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-                </svg>
-            </button>
-            <button class="header-btn" aria-label="Messages">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-                </svg>
-            </button>
-        </div>
-    </header>
-
-    <!-- Stories Bar -->
-    <section class="stories-bar" id="storiesBar">
-        <div class="stories-scroll">
-            <!-- Your Story -->
-            <div class="story-item your-story">
-                <div class="story-ring">
-                    <div class="story-avatar" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                        <span class="avatar-initial">Y</span>
-                    </div>
-                    <div class="story-add-badge">+</div>
+    <!-- ═══ EARNING TIME GATE SCREEN ═══ -->
+    <div class="gate-screen" id="gateScreen">
+        <div class="gate-content">
+            <div class="gate-logo">
+                <div class="gate-icon">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#E1306C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="2" width="20" height="20" rx="5"/>
+                        <circle cx="12" cy="12" r="5"/>
+                        <circle cx="17.5" cy="6.5" r="1.5" fill="#E1306C" stroke="none"/>
+                    </svg>
                 </div>
-                <span class="story-username">Your story</span>
+                <h1 class="gate-title">DoomScroll</h1>
+                <p class="gate-subtitle">Mindful scrolling companion</p>
+            </div>
+            <div class="gate-timer-display">
+                <div class="gate-time-circle">
+                    <span class="gate-time-value">15</span>
+                    <span class="gate-time-unit">min</span>
+                </div>
+                <p class="gate-time-label">scroll time available</p>
+            </div>
+            <button class="gate-start-btn" id="gateStartBtn">Start Session</button>
+            <p class="gate-earn-text">Earn more time through activity, meditation, or breaks</p>
+            <div class="gate-stats">
+                <div class="gate-stat">
+                    <span class="gate-stat-value">2h 14m</span>
+                    <span class="gate-stat-label">saved this week</span>
+                </div>
+                <div class="gate-stat-divider"></div>
+                <div class="gate-stat">
+                    <span class="gate-stat-value">3</span>
+                    <span class="gate-stat-label">sessions today</span>
+                </div>
             </div>
         </div>
-    </section>
-
-    <!-- Feed -->
-    <main class="feed" id="feed">
-        <!-- Posts are injected by JS -->
-    </main>
-
-    <!-- Loading Spinner -->
-    <div class="loading-spinner" id="loadingSpinner">
-        <div class="spinner"></div>
     </div>
 
-    <!-- Bottom Navigation -->
-    <nav class="bottom-nav">
-        <button class="nav-item active" aria-label="Home">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2L3 9v11a2 2 0 002 2h4v-7h6v7h4a2 2 0 002-2V9L12 2z"/>
-            </svg>
-        </button>
-        <button class="nav-item" aria-label="Search">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
-            </svg>
-        </button>
-        <button class="nav-item" aria-label="New Post">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8M8 12h8"/>
-            </svg>
-        </button>
-        <button class="nav-item" aria-label="Reels">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="2" y="2" width="20" height="20" rx="2"/><path d="M7 2v20M2 12h20M2 7h5M2 17h5M17 2l-5 5M12 7l5-5"/>
-            </svg>
-        </button>
-        <button class="nav-item" aria-label="Profile">
-            <div class="nav-avatar" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                <span>Y</span>
+    <!-- ═══ MAIN APP SHELL ═══ -->
+    <div class="app-shell" id="appShell" style="display:none;">
+
+        <!-- Seatbelt border glow -->
+        <div class="seatbelt-border" id="seatbeltBorder"></div>
+
+        <!-- Session Timer Bar -->
+        <div class="session-timer" id="sessionTimer">
+            <div class="session-timer-bar" id="sessionTimerBar"></div>
+            <span class="session-timer-text" id="sessionTimerText"></span>
+        </div>
+
+        <!-- iOS Status Bar Spacer -->
+        <div class="status-bar-spacer"></div>
+
+        <!-- App Header -->
+        <header class="app-header" id="appHeader">
+            <div class="header-left">
+                <!-- Camera icon -->
+                <button class="header-btn" aria-label="Camera">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/>
+                        <circle cx="12" cy="13" r="4"/>
+                    </svg>
+                </button>
             </div>
-        </button>
-    </nav>
+            <div class="header-logo">Instagram</div>
+            <div class="header-right">
+                <!-- Heart / Notifications -->
+                <button class="header-btn" aria-label="Notifications">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+                    </svg>
+                </button>
+                <!-- Messenger -->
+                <button class="header-btn" aria-label="Messages">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Stories Bar -->
+        <section class="stories-bar" id="storiesBar">
+            <div class="stories-scroll" id="storiesScroll">
+                <!-- Your Story -->
+                <div class="story-item your-story">
+                    <div class="story-ring no-gradient">
+                        <div class="story-avatar">
+                            <img src="https://picsum.photos/seed/yourstory/150/150" alt="Your story" loading="lazy">
+                        </div>
+                        <div class="story-add-badge">+</div>
+                    </div>
+                    <span class="story-username">Your story</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feed -->
+        <main class="feed" id="feed"></main>
+
+        <!-- Loading Spinner -->
+        <div class="loading-spinner" id="loadingSpinner">
+            <div class="spinner"></div>
+        </div>
+
+        <!-- Grayscale Indicator -->
+        <div class="grayscale-indicator" id="grayscaleIndicator">
+            <div class="grayscale-indicator-inner">
+                <div class="grayscale-icon">🎨</div>
+                <div class="grayscale-bar-track">
+                    <div class="grayscale-bar-fill" id="grayscaleBarFill"></div>
+                </div>
+                <span class="grayscale-percent" id="grayscalePercent">100%</span>
+            </div>
+        </div>
+
+        <!-- Grayscale Full Message -->
+        <div class="grayscale-message" id="grayscaleMessage">
+            <div class="grayscale-message-content">
+                <div class="grayscale-message-icon">🌿</div>
+                <h3>Your feed has gone grayscale</h3>
+                <p>Colors return after a 5-minute break.</p>
+                <p class="grayscale-message-sub">Taking breaks helps reset your dopamine response to visual stimuli.</p>
+                <button class="grayscale-dismiss-btn" id="grayscaleDismissBtn">I'll take a break</button>
+            </div>
+        </div>
+
+        <!-- Seatbelt Notification -->
+        <div class="seatbelt-notification" id="seatbeltNotification">
+            <div class="seatbelt-notification-content">
+                <span class="seatbelt-notification-icon">⏰</span>
+                <div class="seatbelt-notification-text">
+                    <strong id="seatbeltTitle">You've been scrolling for a while</strong>
+                    <span id="seatbeltMessage">Take a break?</span>
+                </div>
+                <button class="seatbelt-dismiss" id="seatbeltDismiss">&times;</button>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav" id="bottomNav">
+            <button class="nav-item active" aria-label="Home">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                    <path d="M9.005 16.545a2.997 2.997 0 012.997-2.997A2.997 2.997 0 0115 16.545V22h7V11.543L12 2 2 11.543V22h7.005z"/>
+                </svg>
+            </button>
+            <button class="nav-item" aria-label="Search">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="M21 21l-4.35-4.35"/>
+                </svg>
+            </button>
+            <button class="nav-item" aria-label="Reels">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="4"/>
+                    <path d="M2 8h20M2 16h20"/>
+                    <polygon points="10,11 15,14 10,17" fill="currentColor" stroke="none"/>
+                </svg>
+            </button>
+            <button class="nav-item" aria-label="Shop">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <path d="M16 10a4 4 0 01-8 0"/>
+                </svg>
+            </button>
+            <button class="nav-item" aria-label="Profile">
+                <div class="nav-avatar">
+                    <img src="https://picsum.photos/seed/yourstory/150/150" alt="Profile">
+                </div>
+            </button>
+        </nav>
+    </div>
 
     <script src="js/app.js"></script>
 </body>
