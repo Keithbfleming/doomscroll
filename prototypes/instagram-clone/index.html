@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="DoomScroll">
+    <title>DoomScroll</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- iOS Status Bar Spacer -->
+    <div class="status-bar-spacer"></div>
+
+    <!-- App Header -->
+    <header class="app-header">
+        <div class="header-logo">
+            <svg width="103" height="29" viewBox="0 0 103 29" fill="none">
+                <text x="0" y="24" font-family="'Georgia', serif" font-size="24" font-style="italic" fill="#262626">DoomScroll</text>
+            </svg>
+        </div>
+        <div class="header-actions">
+            <button class="header-btn" aria-label="Notifications">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+            </button>
+            <button class="header-btn" aria-label="Messages">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Stories Bar -->
+    <section class="stories-bar" id="storiesBar">
+        <div class="stories-scroll">
+            <!-- Your Story -->
+            <div class="story-item your-story">
+                <div class="story-ring">
+                    <div class="story-avatar" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <span class="avatar-initial">Y</span>
+                    </div>
+                    <div class="story-add-badge">+</div>
+                </div>
+                <span class="story-username">Your story</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feed -->
+    <main class="feed" id="feed">
+        <!-- Posts are injected by JS -->
+    </main>
+
+    <!-- Loading Spinner -->
+    <div class="loading-spinner" id="loadingSpinner">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <button class="nav-item active" aria-label="Home">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2L3 9v11a2 2 0 002 2h4v-7h6v7h4a2 2 0 002-2V9L12 2z"/>
+            </svg>
+        </button>
+        <button class="nav-item" aria-label="Search">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+            </svg>
+        </button>
+        <button class="nav-item" aria-label="New Post">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8M8 12h8"/>
+            </svg>
+        </button>
+        <button class="nav-item" aria-label="Reels">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="2" width="20" height="20" rx="2"/><path d="M7 2v20M2 12h20M2 7h5M2 17h5M17 2l-5 5M12 7l5-5"/>
+            </svg>
+        </button>
+        <button class="nav-item" aria-label="Profile">
+            <div class="nav-avatar" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                <span>Y</span>
+            </div>
+        </button>
+    </nav>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
