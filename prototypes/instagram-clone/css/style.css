@@ -483,7 +483,63 @@ html, body {
     letter-spacing: 0.5px;
 }
 
-/* Open Instagram Button */
+/* Balance Breakdown (expandable) */
+.balance-breakdown {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.25s ease, opacity 0.25s ease;
+}
+
+.balance-card.expanded .balance-breakdown {
+    max-height: 200px;
+    opacity: 1;
+}
+
+.balance-card.expanded .balance-chevron {
+    transform: rotate(180deg);
+}
+
+.breakdown-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 16px 0;
+}
+
+.breakdown-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-light);
+    text-align: left;
+    margin-bottom: 12px;
+}
+
+.breakdown-row {
+    display: flex;
+    align-items: center;
+    padding: 6px 0;
+    font-size: 14px;
+}
+
+.breakdown-source {
+    flex: 1;
+    text-align: left;
+    color: var(--text);
+}
+
+.breakdown-detail {
+    color: var(--text-light);
+    margin-right: 12px;
+    font-size: 13px;
+}
+
+.breakdown-earned {
+    font-weight: 600;
+    color: #34c759;
+    min-width: 28px;
+    text-align: right;
+}
+
 .gate-open-btn {
     width: 100%;
     padding: 16px;

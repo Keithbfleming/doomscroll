@@ -135,10 +135,19 @@ let loading = false;
 
 // ── init ──
 document.addEventListener('DOMContentLoaded', () => {
+    setupGate();
     renderStories();
     loadPosts();
     setupInfiniteScroll();
 });
+
+// ── gate ──
+function setupGate() {
+    const card = document.getElementById('balanceCard');
+    card.addEventListener('click', () => {
+        card.classList.toggle('expanded');
+    });
+}
 
 // ── stories ──
 function renderStories() {
