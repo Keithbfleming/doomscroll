@@ -177,6 +177,15 @@ function setupGate() {
         if (e.target === modal) modal.classList.remove('visible');
     });
 
+    // Toggle switches in modal (visual demo only)
+    document.querySelectorAll('.modal-item').forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const toggle = item.querySelector('.modal-toggle');
+            if (toggle) toggle.classList.toggle('on');
+        });
+    });
+
     // Intention chip selection
     chips.forEach(chip => {
         chip.addEventListener('click', (e) => {
