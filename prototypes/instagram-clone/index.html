@@ -53,8 +53,8 @@
                         </div>
                     </div>
 
-                    <!-- Intention Section -->
-                    <div class="intention-section">
+                    <!-- Intention Section (entry state) -->
+                    <div class="intention-section" id="intentionSection">
                         <div class="intention-label">Before you go in:</div>
                         <div class="intention-grid">
                             <button class="intention-chip" data-intention="check">Check on a friend</button>
@@ -65,10 +65,21 @@
                         <input class="intention-free" id="intentionFree" type="text" placeholder="Something else...">
                     </div>
 
-                    <!-- Open Instagram Button -->
+                    <!-- Open Instagram Button (entry state) -->
                     <button class="gate-open-btn disabled" id="gateOpenBtn" disabled>
                         Open Instagram
                     </button>
+
+                    <!-- Blocked State (hidden by default) -->
+                    <div class="blocked-section" id="blockedSection" style="display:none;">
+                        <div class="blocked-message">
+                            <p class="blocked-title">You've used your balance for now.</p>
+                            <p class="blocked-sub">Complete activities to earn more time.</p>
+                        </div>
+                        <button class="gate-open-btn" id="viewActivitiesBtn">
+                            View earning activities
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Confirmation Dialog Overlay -->

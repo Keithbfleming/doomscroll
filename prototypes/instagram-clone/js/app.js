@@ -241,11 +241,40 @@ function startSessionTimer() {
             fillEl.style.width = `${(balanceSeconds / totalSeconds) * 100}%`;
         } else {
             clearInterval(sessionInterval);
-            textEl.textContent = '⏱ 0:00 · session ended';
-            timerEl.classList.add('overtime');
-            fillEl.style.width = '0%';
+            balanceSeconds = 0;
+            returnToGateBlocked();
         }
     }, 1000);
+}
+
+// ── return to gate (blocked state) ──
+function returnToGateBlocked() {
+    const gate = document.getElementById('gateScreen');
+    const igApp = document.getElementById('igApp');
+    const balanceNum = document.getElementById('balanceNumber');
+    const intentionSection = document.getElementById('intentionSection');
+    const openBtn = document.getElementById('gateOpenBtn');
+    const blockedSection = document.getElementById('blockedSection');
+    const timerEl = document.getElementById('sessionTimer');
+
+    // Reset timer visual
+    timerEl.classList.remove('overtime');
+
+    // Switch to blocked state
+    balanceNum.textContent = '0';
+    intentionSection.style.display = 'none';
+    openBtn.style.display = 'none';
+    blockedSection.style.display = 'flex';
+
+    // Clear intention selections
+    document.querySelectorAll('.intention-chip').forEach(c => c.classList.remove('selected'));
+    const freeInput = document.getElementById('intentionFree');
+    if (freeInput) { freeInput.value = ''; freeInput.classList.remove('has-text'); }
+
+    // Show gate, hide feed
+    igApp.style.display = 'none';
+    gate.style.display = '';
+    gate.classList.remove('hidden');
 }
 
 // ── stories ──
