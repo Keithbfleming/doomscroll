@@ -637,7 +637,8 @@ html, body {
     border-radius: 12px;
     border: 1px solid var(--border);
     background: var(--surface);
-    font-size: 14px;
+    font-size: 13px;
+    font-weight: 600;
     font-family: var(--font);
     color: var(--text);
     cursor: pointer;
@@ -656,7 +657,6 @@ html, body {
     background: #e8f4fd;
     border-color: var(--accent);
     color: var(--accent);
-    font-weight: 600;
 }
 
 .intention-free {
