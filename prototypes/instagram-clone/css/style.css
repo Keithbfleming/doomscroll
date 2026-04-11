@@ -563,3 +563,69 @@ html, body {
 .gate-open-btn:not(.disabled):active {
     opacity: 0.85;
 }
+
+/* Intention Section */
+.intention-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.intention-label {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.intention-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.intention-chip {
+    padding: 14px 12px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    font-size: 14px;
+    font-family: var(--font);
+    color: var(--text);
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+    text-align: center;
+}
+
+.intention-chip:active {
+    background: #f0f0f0;
+}
+
+.intention-chip.selected {
+    background: #e8f4fd;
+    border-color: var(--accent);
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.intention-free {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    font-size: 14px;
+    font-family: var(--font);
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s;
+}
+
+.intention-free:focus {
+    border-color: var(--accent);
+}
+
+.intention-free.has-text {
+    border-color: var(--accent);
+    background: #e8f4fd;
+}

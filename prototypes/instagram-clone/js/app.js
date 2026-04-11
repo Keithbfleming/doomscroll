@@ -144,9 +144,49 @@ document.addEventListener('DOMContentLoaded', () => {
 // ── gate ──
 function setupGate() {
     const card = document.getElementById('balanceCard');
+    const openBtn = document.getElementById('gateOpenBtn');
+    const chips = document.querySelectorAll('.intention-chip');
+    const freeInput = document.getElementById('intentionFree');
+
+    // Balance card expand/collapse
     card.addEventListener('click', () => {
         card.classList.toggle('expanded');
     });
+
+    // Intention chip selection
+    chips.forEach(chip => {
+        chip.addEventListener('click', () => {
+            chips.forEach(c => c.classList.remove('selected'));
+            chip.classList.add('selected');
+            freeInput.value = '';
+            freeInput.classList.remove('has-text');
+            unlockButton();
+        });
+    });
+
+    // Free text input
+    freeInput.addEventListener('input', () => {
+        if (freeInput.value.trim()) {
+            chips.forEach(c => c.classList.remove('selected'));
+            freeInput.classList.add('has-text');
+            unlockButton();
+        } else {
+            freeInput.classList.remove('has-text');
+            lockButton();
+        }
+    });
+
+    function unlockButton() {
+        openBtn.classList.remove('disabled');
+        openBtn.disabled = false;
+    }
+
+    function lockButton() {
+        if (!document.querySelector('.intention-chip.selected') && !freeInput.value.trim()) {
+            openBtn.classList.add('disabled');
+            openBtn.disabled = true;
+        }
+    }
 }
 
 // ── stories ──
