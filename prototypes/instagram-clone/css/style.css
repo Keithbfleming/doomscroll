@@ -382,6 +382,18 @@ html, body {
     border: 1px solid var(--text);
 }
 
+/* Prototype Footer Label */
+.proto-footer {
+    text-align: center;
+    font-size: 10px;
+    color: var(--text-light);
+    padding: 4px 0;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    flex-shrink: 0;
+    letter-spacing: 0.2px;
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
     .heart-pop.show { animation: none; }
@@ -459,7 +471,7 @@ html, body {
 
 .timer-text {
     position: relative;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
     color: var(--text);
     letter-spacing: 0.3px;

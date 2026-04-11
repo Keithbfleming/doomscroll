@@ -229,21 +229,21 @@ function startSessionTimer() {
     const fillEl = document.getElementById('timerBarFill');
     const textEl = document.getElementById('timerText');
     const totalSeconds = balanceSeconds;
+    const SPEED = 15;
 
     sessionInterval = setInterval(() => {
-        balanceSeconds--;
+        balanceSeconds -= SPEED;
 
         if (balanceSeconds >= 0) {
             const mins = Math.floor(balanceSeconds / 60);
             const secs = balanceSeconds % 60;
-            textEl.textContent = `${mins}:${secs.toString().padStart(2, '0')} remaining`;
+            textEl.textContent = `⏱ ${mins}:${secs.toString().padStart(2, '0')} remaining · ${SPEED}x`;
             fillEl.style.width = `${(balanceSeconds / totalSeconds) * 100}%`;
         } else {
-            // Overtime
-            const overMins = Math.floor(Math.abs(balanceSeconds) / 60);
-            const overSecs = Math.abs(balanceSeconds) % 60;
-            textEl.textContent = `${overMins}:${overSecs.toString().padStart(2, '0')} overtime`;
+            clearInterval(sessionInterval);
+            textEl.textContent = '⏱ 0:00 · session ended';
             timerEl.classList.add('overtime');
+            fillEl.style.width = '0%';
         }
     }, 1000);
 }
