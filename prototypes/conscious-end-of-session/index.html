@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Instagram">
+    <title>Instagram</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- Phone frame (visible on desktop only) -->
+    <div class="phone-frame">
+        <div class="phone-screen">
+
+            <!-- ═══ INSTAGRAM APP ═══ -->
+            <div class="ig-app" id="igApp">
+
+                <!-- Session Timer Bar (counts up, plain white bar) -->
+                <div class="session-timer" id="sessionTimer">
+                    <span class="timer-text" id="timerText">0:00</span>
+                </div>
+
+                <!-- App Header -->
+                <header class="app-header">
+                    <div class="header-left">
+                        <button class="header-btn" aria-label="Camera">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.5">
+                                <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" />
+                                <circle cx="12" cy="13" r="4" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="header-logo">Instagram</div>
+                    <div class="header-right">
+                        <button class="header-btn" aria-label="Notifications">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.5">
+                                <path
+                                    d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
+                            </svg>
+                        </button>
+                        <button class="header-btn" aria-label="Messages">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.5">
+                                <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
+                            </svg>
+                        </button>
+                        <button class="header-btn end-session-btn" id="endSessionBtn" aria-label="End session">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5">
+                                <line x1="18" y1="6" x2="6" y2="18" />
+                                <line x1="6" y1="6" x2="18" y2="18" />
+                            </svg>
+                        </button>
+                    </div>
+                </header>
+
+                <!-- Scrollable content area -->
+                <div class="scroll-area" id="scrollArea">
+
+                    <!-- Stories Bar -->
+                    <section class="stories-bar">
+                        <div class="stories-scroll" id="storiesScroll">
+                            <div class="story-item your-story">
+                                <div class="story-ring no-ring">
+                                    <img class="story-avatar" src="https://picsum.photos/seed/myprofile/150/150"
+                                        alt="Your story">
+                                    <div class="story-add">+</div>
+                                </div>
+                                <span class="story-name">Your story</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Feed -->
+                    <main class="feed" id="feed"></main>
+
+                    <!-- Loading -->
+                    <div class="loader" id="loader">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+
+                <!-- Footer Label -->
+                <div class="proto-footer">Medium-fidelity prototype · 30x speed</div>
+
+                <!-- Bottom Navigation -->
+                <nav class="bottom-nav">
+                    <button class="nav-btn active" aria-label="Home">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M9 16.5a3 3 0 016 0V22h7V11.5L12 2 2 11.5V22h7v-5.5z" />
+                        </svg>
+                    </button>
+                    <button class="nav-btn" aria-label="Search">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="M21 21l-4.35-4.35" />
+                        </svg>
+                    </button>
+                    <button class="nav-btn" aria-label="Reels">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <rect x="2" y="2" width="20" height="20" rx="4" />
+                            <path d="M2 8h20" />
+                            <polygon points="10,12 16,15 10,18" fill="currentColor" stroke="none" />
+                        </svg>
+                    </button>
+                    <button class="nav-btn" aria-label="Shop">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+                            <line x1="3" y1="6" x2="21" y2="6" />
+                            <path d="M16 10a4 4 0 01-8 0" />
+                        </svg>
+                    </button>
+                    <button class="nav-btn" aria-label="Profile">
+                        <img class="nav-avatar" src="https://picsum.photos/seed/myprofile/150/150" alt="Profile">
+                    </button>
+                </nav>
+
+                <!-- ═══ END OF SESSION OVERLAY ═══ -->
+                <div class="session-overlay" id="sessionOverlay">
+                    <div class="overlay-scroll">
+                        <div class="overlay-inner">
+
+                            <div class="overlay-header">
+                                <div class="overlay-emoji">📊</div>
+                                <div class="overlay-title">Session Summary</div>
+                                <div class="overlay-subtitle">Here's how you spent your time</div>
+                            </div>
+
+                            <!-- Stats Grid -->
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <div class="stat-value" id="statTime">0m</div>
+                                    <div class="stat-label">Time spent</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value" id="statPosts">0</div>
+                                    <div class="stat-label">Posts viewed</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value" id="statVideos">0</div>
+                                    <div class="stat-label">Videos</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value" id="statImages">0</div>
+                                    <div class="stat-label">Photos</div>
+                                </div>
+                            </div>
+
+                            <!-- Opportunity Costs -->
+                            <div class="opportunity-section">
+                                <div class="section-label">In that time, you could have...</div>
+                                <div class="opportunity-card" id="oppCost1"></div>
+                                <div class="opportunity-card" id="oppCost2"></div>
+                            </div>
+
+                            <!-- Mood Check -->
+                            <div class="mood-section">
+                                <div class="mood-label">How do you feel right now?</div>
+                                <div class="mood-scale" id="moodScale">
+                                    <button class="mood-btn" data-mood="1" aria-label="Very bad">😞</button>
+                                    <button class="mood-btn" data-mood="2" aria-label="Bad">😕</button>
+                                    <button class="mood-btn" data-mood="3" aria-label="Neutral">😐</button>
+                                    <button class="mood-btn" data-mood="4" aria-label="Good">🙂</button>
+                                    <button class="mood-btn" data-mood="5" aria-label="Great">😄</button>
+                                </div>
+                                <div class="mood-labels">
+                                    <span>Not great</span>
+                                    <span>Great</span>
+                                </div>
+                            </div>
+
+                            <!-- Actions -->
+                            <div class="overlay-actions">
+                                <button class="overlay-btn primary" id="viewDashboardBtn">View Dashboard</button>
+                                <button class="overlay-btn secondary" id="closeOverlayBtn">Close App</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ═══ DASHBOARD OVERLAY ═══ -->
+                <div class="dashboard-overlay" id="dashboardOverlay">
+                    <div class="dashboard-scroll">
+
+                        <!-- Sticky Header -->
+                        <div class="dashboard-header">
+                            <button class="dash-back-btn" id="dashboardBack" aria-label="Back">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <polyline points="15 18 9 12 15 6" />
+                                </svg>
+                            </button>
+                            <div class="dashboard-title">Usage Dashboard</div>
+                            <button class="dash-close-btn" id="dashboardCloseBtn" aria-label="Close">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.5">
+                                    <line x1="18" y1="6" x2="6" y2="18" />
+                                    <line x1="6" y1="6" x2="18" y2="18" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- This Week -->
+                        <div class="dash-section">
+                            <div class="dash-section-title">This Week</div>
+                            <div class="week-chart" id="weekChart"></div>
+                            <div class="week-total" id="weekTotal">Weekly total: — min</div>
+                        </div>
+
+                        <!-- Weekly Goal -->
+                        <div class="dash-section">
+                            <div class="dash-section-title">Weekly Goal</div>
+
+                            <div class="goal-display" id="goalDisplay">
+                                <div class="goal-ring-wrap">
+                                    <svg class="goal-ring-svg" viewBox="0 0 80 80">
+                                        <circle class="ring-track" cx="40" cy="40" r="30" />
+                                        <circle class="ring-fill" id="ringFill" cx="40" cy="40" r="30"
+                                            stroke-dasharray="188.5" stroke-dashoffset="188.5" />
+                                    </svg>
+                                    <div class="goal-ring-center">
+                                        <div class="goal-percent" id="goalPercent">0%</div>
+                                        <div class="goal-ring-sub">used</div>
+                                    </div>
+                                </div>
+                                <div class="goal-text-info">
+                                    <div class="goal-used-label" id="goalUsedLabel">0 min used</div>
+                                    <div class="goal-of-label">of <span id="goalTarget">120</span> min/week</div>
+                                    <button class="edit-goal-btn" id="editGoalBtn">Edit goal</button>
+                                </div>
+                            </div>
+
+                            <div class="goal-edit-form" id="goalEditForm">
+                                <div class="goal-edit-label">Weekly screen time goal</div>
+                                <div class="goal-stepper">
+                                    <button class="stepper-btn" id="goalDecBtn">−</button>
+                                    <div class="stepper-val-wrap">
+                                        <span class="stepper-val" id="goalStepVal">120</span>
+                                        <span class="stepper-unit">min</span>
+                                    </div>
+                                    <button class="stepper-btn" id="goalIncBtn">+</button>
+                                </div>
+                                <button class="save-goal-btn" id="saveGoalBtn">Save Goal</button>
+                            </div>
+                        </div>
+
+                        <!-- Mood Over Time -->
+                        <div class="dash-section">
+                            <div class="dash-section-title">Mood After Sessions</div>
+                            <div class="mood-history" id="moodHistory"></div>
+                            <div class="mood-trend-row" id="moodTrendRow"></div>
+                        </div>
+
+                        <!-- Session Highlights -->
+                        <div class="dash-section">
+                            <div class="dash-section-title">Session Highlights</div>
+                            <div class="highlights-grid">
+                                <div class="highlight-card">
+                                    <div class="hl-value" id="hlLongest">—</div>
+                                    <div class="hl-label">Longest session</div>
+                                    <div class="hl-sub">this week</div>
+                                </div>
+                                <div class="highlight-card">
+                                    <div class="hl-value" id="hlSessions">—</div>
+                                    <div class="hl-label">Sessions</div>
+                                    <div class="hl-sub">this week</div>
+                                </div>
+                                <div class="highlight-card">
+                                    <div class="hl-value" id="hlAvg">—</div>
+                                    <div class="hl-label">Avg session</div>
+                                    <div class="hl-sub">this week</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Distance Scrolled -->
+                        <div class="dash-section">
+                            <div class="dash-section-title">Distance Scrolled</div>
+                            <div class="distance-row">
+                                <div class="distance-col">
+                                    <div class="distance-stat">
+                                        <span class="distance-val" id="distTodayVal">0</span>
+                                        <span class="distance-unit" id="distTodayUnit">ft</span>
+                                    </div>
+                                    <div class="distance-caption">today</div>
+                                </div>
+                                <div class="distance-divider"></div>
+                                <div class="distance-col">
+                                    <div class="distance-stat">
+                                        <span class="distance-val" id="distWeekVal">0</span>
+                                        <span class="distance-unit" id="distWeekUnit">ft</span>
+                                    </div>
+                                    <div class="distance-caption">this week</div>
+                                </div>
+                            </div>
+                            <div class="distance-metaphor" id="distMetaphor"></div>
+                            <div class="distance-bar-track">
+                                <div class="distance-bar-fill" id="distBarFill"></div>
+                            </div>
+                            <div class="distance-bar-labels">
+                                <span>0</span>
+                                <span id="distBarRef">1 mile</span>
+                            </div>
+                        </div>
+
+                        <!-- Content Breakdown -->
+                        <div class="dash-section">
+                            <div class="dash-section-title">Content Breakdown</div>
+                            <div class="content-breakdown">
+                                <div class="donut-wrap">
+                                    <svg class="donut-svg" viewBox="0 0 80 80">
+                                        <circle class="donut-track" cx="40" cy="40" r="28" />
+                                        <circle class="donut-seg donut-videos" id="donutVideos" cx="40" cy="40"
+                                            r="28" />
+                                        <circle class="donut-seg donut-photos" id="donutPhotos" cx="40" cy="40"
+                                            r="28" />
+                                    </svg>
+                                    <div class="donut-center">
+                                        <div class="donut-total" id="donutTotal">0</div>
+                                        <div class="donut-sub">posts</div>
+                                    </div>
+                                </div>
+                                <div class="breakdown-legend">
+                                    <div class="legend-item">
+                                        <div class="legend-dot" style="background:#0095f6"></div>
+                                        <div class="legend-text">
+                                            <div class="legend-name">Videos</div>
+                                            <div class="legend-count" id="legendVideos">0</div>
+                                        </div>
+                                        <div class="legend-pct" id="legendVideosPct">0%</div>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-dot" style="background:#f09433"></div>
+                                        <div class="legend-text">
+                                            <div class="legend-name">Photos</div>
+                                            <div class="legend-count" id="legendPhotos">0</div>
+                                        </div>
+                                        <div class="legend-pct" id="legendPhotosPct">0%</div>
+                                    </div>
+                                    <div class="legend-item legend-item-stat">
+                                        <div class="legend-dot" style="background:transparent;border:none"></div>
+                                        <div class="legend-text">
+                                            <div class="legend-name">Avg watch time</div>
+                                            <div class="legend-count" id="legendAvgWatch">—</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Accountability Partners -->
+                        <div class="dash-section">
+                            <div class="dash-section-title">Accountability Partners</div>
+                            <div class="dash-section-sub">They'll receive a weekly digest of your total usage time — no
+                                specific content, just aggregate minutes.</div>
+
+                            <div class="partners-list" id="partnersList"></div>
+
+                            <div class="add-partner-row">
+                                <input class="partner-input" id="partnerNameInput" type="text"
+                                    placeholder="Add a friend's name..." maxlength="40">
+                                <button class="add-partner-btn" id="addPartnerBtn">Add</button>
+                            </div>
+                        </div>
+
+                        <div style="height: 48px;"></div>
+
+                    </div><!-- /dashboard-scroll -->
+                </div><!-- /dashboard-overlay -->
+
+                <!-- ═══ SESSION CLOSED SCREEN ═══ -->
+                <div class="closed-screen" id="closedScreen">
+                    <div class="closed-inner">
+                        <div class="closed-icon">👋</div>
+                        <div class="closed-title">See you next time</div>
+                        <div class="closed-sub">Your session has ended.</div>
+                        <button class="closed-reopen-btn" id="reopenBtn">Open Instagram</button>
+                    </div>
+                </div>
+
+            </div><!-- /ig-app -->
+
+        </div>
+        <div class="phone-home-indicator"></div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+
+</html>
