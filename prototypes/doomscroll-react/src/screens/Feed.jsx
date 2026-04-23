@@ -1,9 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useApp } from '../context/AppContext';
 import { generatePost } from '../lib/mockData';
-import PostCard from '../components/PostCard';
-import StoriesRow from '../components/StoriesRow';
-import HealthIcon, { TimerBar } from '../components/HealthIcon';
+import { HealthIcon, TimerBar, StoriesRow, PostCard } from '../components';
 import SessionPanel from './SessionPanel';
 import MentalBreak from './MentalBreak';
 
