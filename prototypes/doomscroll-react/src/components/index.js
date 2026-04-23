@@ -1,10 +1,8 @@
-import HealthIcon from './HealthIcon';
-import TimerBar  from './Timebar';
-import PostCard from './PostCard';
-import StoriesRow from './StoriesRow';
-import BalanceCard from './BalanceCard';
-import IntentionList from './IntentionList';
-import DashboardShortcut from './DashboardShortcut';
-import ConfirmationModal from './ConfirmationModal';
-
-export { HealthIcon, TimerBar, PostCard, StoriesRow, BalanceCard, IntentionList, DashboardShortcut, ConfirmationModal };
+export { default as HealthIcon } from './HealthIcon';
+export { default as TimerBar } from './Timebar';
+export { default as PostCard } from './PostCard';
+export { default as StoriesRow } from './StoriesRow';
+export { default as BalanceCard } from './BalanceCard';
+export { default as IntentionList } from './IntentionList';
+export { default as DashboardShortcut } from './DashboardShortcut';
+export { default as ConfirmationModal } from './ConfirmationModal';

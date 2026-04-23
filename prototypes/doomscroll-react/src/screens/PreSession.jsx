@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import { saveState } from '../lib/storage';
 import { BalanceCard, IntentionList, DashboardShortcut, ConfirmationModal } from '../components';
@@ -7,7 +8,15 @@ export default function PreSession() {
   const { state, dispatch } = useApp();
   const { persisted, intentions, customIntention, showConfirmModal } = state;
 
-  if (!persisted) {
+  const enablePreSession = persisted?.enablePreSession;
+
+  useEffect(() => {
+    if (persisted && !enablePreSession) {
+      dispatch({ type: 'START_SESSION', timeGoal: persisted.earnedBalance, persisted });
+    }
+  }, [persisted, enablePreSession]);
+
+  if (!persisted || !enablePreSession) {
     return (
       <div className="flex items-center justify-center h-screen">
         <div className="w-8 h-8 rounded-full border-4 border-blue-500 border-t-transparent spin-slow" />
@@ -15,14 +24,10 @@ export default function PreSession() {
     );
   }
 
-  const { earnedBalance, earningActivities, enablePreSession } = persisted;
+  const { earnedBalance, earningActivities } = persisted;
   const activeActivities = earningActivities.filter(a => a.enabled);
 
   function handleOpenInstagram() {
-    if (!enablePreSession) {
-      dispatch({ type: 'START_SESSION', timeGoal: earnedBalance, persisted });
-      return;
-    }
     dispatch({ type: 'SHOW_CONFIRM' });
   }
 
