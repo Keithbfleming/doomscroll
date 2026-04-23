@@ -30,20 +30,20 @@ export default function HealthIcon({ onOpen }) {
   return (
     <button
       onClick={onOpen}
-      className={`w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-all ${isAlert ? 'pulse-ring' : ''}`}
+      className={`w-16 h-16 rounded-full flex items-center justify-center shadow-lg transition-colors duration-1000 ${isAlert ? 'pulse-ring' : ''}`}
       style={{ backgroundColor: color }}
       aria-label="Session status"
     >
-      {/* Head + Heart icon */}
-      <svg viewBox="0 0 32 32" className="w-8 h-8 text-white" fill="white">
-        {/* Head */}
-        <circle cx="16" cy="11" r="5.5" />
-        {/* Body arc */}
-        <path d="M6 26c0-5.523 4.477-9 10-9s10 3.477 10 9" strokeWidth={0} />
-        {/* Small heart */}
+      {/* Person silhouette (white) with heart inside the head in button bg color */}
+      <svg viewBox="0 0 32 32" className="w-11 h-11" fill="white">
+        {/* Head — lowered so it touches the torso */}
+        <circle cx="16" cy="12" r="7" />
+        {/* Body */}
+        <path d="M4 30c0-7 5.4-11.5 12-11.5S28 23 28 30" />
+        {/* Heart inside head — shifted down with the head */}
         <path
-          d="M16 22.5c-.5-.4-2-1.6-2-2.8a1.5 1.5 0 013 0 1.5 1.5 0 013 0c0 1.2-1.5 2.4-2 2.8l-1 .7-1-.7z"
-          fill="rgba(255,255,255,0.9)"
+          d="M16 16.5C16 16.5 12 14 12 11.5C12 10 13.2 9 14.5 9C15.3 9 15.9 9.5 16 10.3C16.1 9.5 16.7 9 17.5 9C18.8 9 20 10 20 11.5C20 14 16 16.5 16 16.5Z"
+          fill={color}
         />
       </svg>
     </button>
