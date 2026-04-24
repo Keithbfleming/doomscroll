@@ -117,24 +117,6 @@ export default function SettingsPanel({ persisted, dispatch }) {
             </div>
           </div>
 
-          {/* Weekly goal stepper */}
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-800">Weekly goal</p>
-              <p className="text-xs text-gray-400">Total minutes per week</p>
-            </div>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => dispatch({ type: 'UPDATE_SETTING', key: 'weeklyGoal', value: Math.max(15, weeklyGoal - 15) })}
-                className="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center text-gray-700 font-bold"
-              >−</button>
-              <span className="text-sm font-semibold w-10 text-center">{weeklyGoal}</span>
-              <button
-                onClick={() => dispatch({ type: 'UPDATE_SETTING', key: 'weeklyGoal', value: Math.min(600, weeklyGoal + 15) })}
-                className="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center text-gray-700 font-bold"
-              >+</button>
-            </div>
-          </div>
 
           {/* Earning activities — collapsible sub-section, collapsed by default */}
           <div className="border-t border-gray-100 pt-4">

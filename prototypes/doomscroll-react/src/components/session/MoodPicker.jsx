@@ -1,11 +1,4 @@
-/** All available mood options, ordered from worst to best. */
-const MOODS = [
-  { score: 1, emoji: '😞', label: 'Not great', bg: '#fde8ea' },
-  { score: 2, emoji: '😕', label: 'Meh',       bg: '#fff0e0' },
-  { score: 3, emoji: '😐', label: 'Okay',       bg: '#fffbea' },
-  { score: 4, emoji: '🙂', label: 'Good',       bg: '#e0f7ff' },
-  { score: 5, emoji: '😄', label: 'Great',      bg: '#e0faf3' },
-];
+import { MOOD_DEFS } from '../../lib/moods';
 
 /**
  * Row of 5 emoji buttons for recording the user's post-session mood.
@@ -20,7 +13,7 @@ export default function MoodPicker({ currentMood, onSelect }) {
     <div className="mb-5">
       <p className="text-sm font-semibold text-gray-700 mb-3">How are you feeling?</p>
       <div className="flex justify-between gap-1">
-        {MOODS.map(m => (
+        {MOOD_DEFS.filter(Boolean).map(m => (
           <button
             key={m.score}
             onClick={() => onSelect(m.score)}
@@ -28,7 +21,6 @@ export default function MoodPicker({ currentMood, onSelect }) {
             style={{
               backgroundColor: currentMood === m.score ? m.bg : '#f9fafb',
               border: `2px solid ${currentMood === m.score ? '#3B82F6' : 'transparent'}`,
-              // Slight scale-up gives tactile feedback without layout shift
               transform: currentMood === m.score ? 'scale(1.05)' : 'scale(1)',
             }}
           >

@@ -1,3 +1,5 @@
+import { DashboardShortcut } from '../';
+
 /**
  * Instagram-style top navigation bar for the feed screen.
  * Purely decorative in this prototype — buttons have no action handlers.
@@ -16,6 +18,7 @@ export default function FeedHeader() {
       </span>
 
       <div className="flex items-center gap-4">
+        <DashboardShortcut />
         {/* New post button */}
         <button className="text-gray-900" aria-label="New post">
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -6,21 +6,22 @@ import { useState } from 'react';
  * overflow:hidden container — never use `position: fixed` here.
  *
  * @param {object} props
- * @param {function} props.onCancel - Called when the user taps the cancel button or the backdrop.
- * @param {function} props.onContinue - Called when the user confirms.
- *   Receives the parsed timeGoal integer (or the fallback balance value) when showTimeInput is true.
- *   Receives no arguments when showTimeInput is false.
- * @param {number} [props.balance] - Fallback minutes value shown as the time-input placeholder.
- * @param {string} [props.title='Before you dive in'] - Header text.
- * @param {string} [props.continueLabel='Continue'] - Label for the primary (confirm) button.
- * @param {string} [props.cancelLabel='Cancel'] - Label for the secondary (cancel) button.
- * @param {boolean} [props.showTimeInput=true] - Whether to render the time-goal input block.
- *   Pass false from MentalBreak's extension modal (it has its own input in children).
- * @param {React.ReactNode} [props.children] - Extra content rendered between the title and the input.
+ * @param {function} props.onCancel - Called when the backdrop is tapped (dismiss only).
+ * @param {function} props.onContinue - Called when the primary button is tapped.
+ * @param {function} [props.onSecondaryAction] - Called when the cancel button is tapped.
+ *   Defaults to onCancel if not provided. Use this when backdrop-dismiss and cancel-button
+ *   need different behaviours (e.g. MentalBreak: backdrop=close modal, button=return to feed).
+ * @param {number} [props.balance]
+ * @param {string} [props.title='Before you dive in']
+ * @param {string} [props.continueLabel='Continue']
+ * @param {string} [props.cancelLabel='Cancel']
+ * @param {boolean} [props.showTimeInput=true]
+ * @param {React.ReactNode} [props.children]
  */
 export default function ConfirmationModal({
   onCancel,
   onContinue,
+  onSecondaryAction,
   balance,
   children,
   title = 'Before you dive in',
@@ -30,6 +31,9 @@ export default function ConfirmationModal({
 }) {
   const [timeGoal, setTimeGoal] = useState('');
   const [goalSet, setGoalSet] = useState(false);
+
+  // The cancel button action — separate from backdrop dismiss
+  const handleSecondary = onSecondaryAction ?? onCancel;
 
   function handleContinue() {
     if (showTimeInput) {
@@ -72,7 +76,7 @@ export default function ConfirmationModal({
 
         <div className="flex gap-3">
           <button
-            onClick={onCancel}
+            onClick={handleSecondary}
             className="flex-1 py-3 rounded-xl bg-gray-100 text-gray-700 font-medium text-sm"
           >
             {cancelLabel}

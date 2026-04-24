@@ -128,5 +128,4 @@ export const WELLNESS_FACTS = [
   "Brief mental breaks strengthen memory consolidation and creativity.",
 ];
 
-/** Abbreviated day names for Mon–Sun week arrays (index 0 = Monday). */
-export const DAY_NAMES = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+export { DAY_NAMES } from './constants';

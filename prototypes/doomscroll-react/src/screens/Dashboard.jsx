@@ -1,12 +1,13 @@
 import { useApp } from '../context/AppContext';
 import { getTodayIndex } from '../lib/storage';
-import { DAY_NAMES } from '../lib/mockData';
+import { DAY_NAMES } from '../lib/constants';
 import {
   WeeklyChart,
   GoalRing,
   MoodHistory,
   SessionHighlights,
   ContentBreakdown,
+  DistanceScrolled,
   SettingsPanel,
 } from '../components/dashboard';
 
@@ -17,7 +18,7 @@ import {
  */
 export default function Dashboard() {
   const { state, dispatch } = useApp();
-  const { persisted } = state;
+  const { persisted, session } = state;
 
   // Render nothing while persisted state is still loading from localStorage
   if (!persisted) return null;
@@ -54,42 +55,37 @@ export default function Dashboard() {
 
       {/* Scrollable content area */}
       <div className="flex-1 overflow-y-auto scrollbar-hide pb-10 px-4 pt-4 space-y-4">
-        {/* Settings — collapsed by default (Fix 4) */}
+        {/* Settings last — after all analytics */}
         <SettingsPanel persisted={persisted} dispatch={dispatch} />
         
-        {/* Goal ring — separate card from the weekly chart (Fix 8) */}
+        {/* Goal ring — canonical place to view and edit the weekly goal */}
         <GoalRing
           used={totalUsed}
           goal={weeklyGoal}
-          onGoalChange={val =>
-            dispatch({ type: 'UPDATE_SETTING', key: 'weeklyGoal', value: val })
-          }
+          onGoalChange={val => dispatch({ type: 'UPDATE_SETTING', key: 'weeklyGoal', value: val })}
         />
 
-        {/* Weekly bar chart */}
+        {/* Weekly bar chart — legend now lives inside WeeklyChart */}
         <div className="bg-white rounded-2xl p-5 border border-gray-100">
-          <div className="flex items-start justify-between mb-4">
-            <div>
-              <p className="text-sm font-semibold text-gray-900">Weekly Usage</p>
-              <p className="text-xs text-gray-400">{totalUsed} min this week</p>
-            </div>
+          <div className="mb-4">
+            <p className="text-sm font-semibold text-gray-900">Weekly Usage</p>
+            <p className="text-xs text-gray-400">{totalUsed} min this week</p>
           </div>
           <WeeklyChart weeklyData={weeklyData} weeklyGoal={weeklyGoal} todayIndex={todayIndex} />
-          <div className="flex items-center gap-2 mt-3">
-            <div className="w-2.5 h-2.5 rounded bg-blue-500" />
-            <span className="text-[11px] text-gray-400">Today</span>
-            <div className="w-2.5 h-2.5 rounded bg-gray-300 ml-3" />
-            <span className="text-[11px] text-gray-400">Past days</span>
-            <div className="w-2.5 h-2.5 rounded bg-red-400 ml-3" />
-            <span className="text-[11px] text-gray-400">Over daily avg</span>
-          </div>
         </div>
 
-        {/* Mood history with recommendation callout (Fix 8) */}
+        {/* Mood history — sliced to past days only */}
         <MoodHistory
           moodHistory={moodHistory}
           weeklyData={weeklyData}
           dayNames={DAY_NAMES}
+          todayIndex={todayIndex}
+        />
+
+        {/* Distance scrolled this week */}
+        <DistanceScrolled
+          sessionHistory={sessionHistory}
+          todayPostCount={session?.postCount ?? 0}
         />
 
         {/* Session highlights */}
@@ -97,7 +93,6 @@ export default function Dashboard() {
 
         {/* Content breakdown (donut + category bars) */}
         <ContentBreakdown sessionHistory={sessionHistory} />
-
       </div>
     </div>
   );

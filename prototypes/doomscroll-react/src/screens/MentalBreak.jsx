@@ -96,16 +96,16 @@ export default function MentalBreak({ onReturn, breakMins = 5 }) {
           <span className="text-3xl font-bold text-gray-200">
             {mins}:{String(secs).padStart(2, '0')}
           </span>
-          <span className="text-xs text-gray-500 mt-1">remaining</span>
+          <span className="text-xs text-gray-300 mt-1">remaining</span>
         </div>
       </div>
 
-      <p className="text-gray-500 text-sm mb-8">Returning to feed automatically</p>
+      <p className="text-gray-200 text-sm mb-8">Returning to feed automatically</p>
 
       {/* Return early — opens confirmation modal rather than immediately returning */}
       <button
         onClick={() => setShowEarlyConfirm(true)}
-        className="text-gray-600 text-sm underline underline-offset-2 mb-3"
+        className="text-gray-400 text-sm underline underline-offset-2 mb-3"
       >
         Return early
       </button>
@@ -113,7 +113,7 @@ export default function MentalBreak({ onReturn, breakMins = 5 }) {
       {/* Close app — navigates to the fake homescreen */}
       <button
         onClick={() => dispatch({ type: 'SET_SCREEN', screen: 'homescreen' })}
-        className="text-gray-700 text-sm"
+        className="text-gray-100 text-sm"
       >
         Close app
       </button>
