@@ -3,19 +3,28 @@ import { useApp } from '../context/AppContext';
 import { saveState } from '../lib/storage';
 import { BalanceCard, IntentionList, DashboardShortcut, ConfirmationModal } from '../components';
 
-
+/**
+ * Pre-session screen that prompts users to set an intention and review their
+ * earned balance before opening the Instagram feed.
+ *
+ * If the user has disabled the pre-session nudge (enablePreSession = false),
+ * this screen skips itself and fires START_SESSION immediately, using the
+ * earnedBalance as the time goal.
+ */
 export default function PreSession() {
   const { state, dispatch } = useApp();
   const { persisted, intentions, customIntention, showConfirmModal } = state;
 
   const enablePreSession = persisted?.enablePreSession;
 
+  // Auto-skip to feed if pre-session nudge is disabled in settings
   useEffect(() => {
     if (persisted && !enablePreSession) {
       dispatch({ type: 'START_SESSION', timeGoal: persisted.earnedBalance, persisted });
     }
   }, [persisted, enablePreSession]);
 
+  // Show a spinner while state is loading or while auto-skip is in progress
   if (!persisted || !enablePreSession) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -27,10 +36,17 @@ export default function PreSession() {
   const { earnedBalance, earningActivities } = persisted;
   const activeActivities = earningActivities.filter(a => a.enabled);
 
+  /** Opens the time-goal confirmation modal. */
   function handleOpenInstagram() {
     dispatch({ type: 'SHOW_CONFIRM' });
   }
 
+  /**
+   * Persists the selected intention and starts the session with the given time goal.
+   * Called by ConfirmationModal when the user taps "Continue".
+   *
+   * @param {number} timeGoal - Minutes the user plans to spend (from modal input or balance fallback).
+   */
   function handleContinue(timeGoal) {
     const newPersisted = {
       ...persisted,
@@ -52,15 +68,15 @@ export default function PreSession() {
         <DashboardShortcut />
       </div>
 
-      {/* Balance Card */}
+      {/* Balance card — shows earned minutes and contributing activities */}
       <BalanceCard earnedBalance={earnedBalance} activeActivities={activeActivities} />
 
-      {/* Intention selector */}
+      {/* Intention chip selector + freeform input */}
       <IntentionList />
 
       <div className="flex-1" />
 
-      {/* CTA */}
+      {/* Call to action */}
       <div className="px-5 pb-10">
         <button
           onClick={handleOpenInstagram}
@@ -73,7 +89,7 @@ export default function PreSession() {
         </p>
       </div>
 
-      {/* Confirm Modal */}
+      {/* Time-goal confirmation modal */}
       {showConfirmModal && (
         <ConfirmationModal
           balance={earnedBalance}

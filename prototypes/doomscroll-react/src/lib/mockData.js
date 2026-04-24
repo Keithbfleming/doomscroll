@@ -1,4 +1,11 @@
-// Seeded random — consistent values across reloads
+/**
+ * Deterministic pseudo-random number in [0, 1) based on a numeric seed.
+ * Uses a sine-based hash so the same seed always produces the same value —
+ * keeps post data stable across page reloads without a real database.
+ *
+ * @param {number} n - Seed integer.
+ * @returns {number} Pseudo-random float in [0, 1).
+ */
 function seededRand(n) {
   return Math.abs(Math.sin(n * 9301 + 49297) * 49271) % 1;
 }
@@ -60,6 +67,17 @@ export const VIDEO_SRCS = [
 
 export const CONTENT_TAGS = ['Travel', 'Food', 'Fitness', 'Art', 'Music', 'Nature', 'Fashion', 'Tech', 'Lifestyle'];
 
+/**
+ * Generates a deterministic post object for a given index.
+ * Using seededRand ensures the same post is always generated for the same index,
+ * which keeps the infinite feed visually stable on re-renders.
+ *
+ * Even indices are photos; odd indices are videos (simple alternation keeps the
+ * feed balanced without needing a separate media pool).
+ *
+ * @param {number} i - Post index (0-based, monotonically increasing in the feed).
+ * @returns {object} A complete post data object ready for PostCard.
+ */
 export function generatePost(i) {
   const user = USERS[Math.floor(seededRand(i * 3) * USERS.length)];
   const isVideo = i % 2 === 1;
@@ -110,4 +128,5 @@ export const WELLNESS_FACTS = [
   "Brief mental breaks strengthen memory consolidation and creativity.",
 ];
 
+/** Abbreviated day names for Mon–Sun week arrays (index 0 = Monday). */
 export const DAY_NAMES = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
