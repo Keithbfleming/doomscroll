@@ -14,24 +14,27 @@ function linearInterpolation(a, b, t) {
 }
 
 /**
- * Converts a session progress fraction to an RGB colour string.
+ * Converts a session progress fraction to RGB channels.
  * Interpolates from blue (#3B82F6) at 0% usage to red (#EF4444) at 100%.
- * Using lerp instead of CSS transitions avoids jarring colour jumps on re-renders.
  *
  * @param {number} pct - Progress fraction in [0, 1].
- * @returns {string} CSS rgb() colour string.
+ * @returns {{r:number,g:number,b:number}} RGB channel values.
  */
-function getColor(pct) {
-  const r = linearInterpolation(0x3B, 0xEF, pct);
-  const g = linearInterpolation(0x82, 0x44, pct);
-  const b = linearInterpolation(0xF6, 0x44, pct);
-  return `rgb(${r},${g},${b})`;
+function getColorChannels(pct) {
+  return {
+    r: linearInterpolation(0x3B, 0xEF, pct),
+    g: linearInterpolation(0x82, 0x44, pct),
+    b: linearInterpolation(0xF6, 0x44, pct),
+  };
 }
 
 /**
  * Floating circular button that opens the session panel and serves as a health indicator.
  * Colour transitions from blue (calm) to red (over goal) as session time increases.
- * Pulses when the time goal has been exceeded (pulse-ring CSS animation).
+ * A pulse ring runs continuously; its spread, opacity, color, and speed all scale
+ * with progress so the cue ramps from faint+slow at 0% to prominent+fast at 100%+.
+ * Provides a non-color signal for colorblind viewers throughout the session and
+ * reinforces the color gradient for everyone else.
  *
  * @param {object} props
  * @param {function} props.onOpen - Called when the button is tapped to open the session panel.
@@ -41,14 +44,25 @@ export default function HealthIcon({ onOpen }) {
   const { session } = state;
   const goalSec = (session.timeGoal || 12) * 60;
   const pct = Math.min(session.elapsedSec / goalSec, 1);
-  const isAlert = pct >= 1;
-  const color = getColor(pct);
+  const { r, g, b } = getColorChannels(pct);
+  const color = `rgb(${r},${g},${b})`;
+
+  // Pulse parameters all scale linearly with pct so the cue ramps with progress.
+  const pulseSpread = `${2 + pct * 14}px`;          // 2px → 16px
+  const pulseOpacity = 0.05 + pct * 0.6;            // 0.05 → 0.65
+  const pulseDuration = `${(2.5 - pct * 1.9).toFixed(2)}s`; // 2.5s → 0.6s
+  const pulseColor = `rgba(${r},${g},${b},${pulseOpacity})`;
 
   return (
     <button
       onClick={onOpen}
-      className={`w-16 h-16 rounded-full flex items-center justify-center shadow-lg transition-colors duration-1000 ${isAlert ? 'pulse-ring' : ''}`}
-      style={{ backgroundColor: color }}
+      className="w-16 h-16 rounded-full flex items-center justify-center shadow-lg transition-colors duration-1000 pulse-ring"
+      style={{
+        backgroundColor: color,
+        '--pulse-spread': pulseSpread,
+        '--pulse-color': pulseColor,
+        '--pulse-duration': pulseDuration,
+      }}
       aria-label="Session status"
     >
       {/* Person silhouette with heart inside — icon colour matches button bg for contrast */}

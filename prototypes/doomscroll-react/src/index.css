@@ -85,10 +85,15 @@
     to   { opacity: 1; }
   }
 
-  .pulse-ring { animation: pulse-ring 1s ease-in-out infinite; }
+  .pulse-ring {
+    animation: pulse-ring var(--pulse-duration, 1s) ease-in-out infinite;
+  }
   @keyframes pulse-ring {
-    0%,100% { box-shadow: 0 0 0 0 rgba(239,68,68,0.6); }
-    50%     { box-shadow: 0 0 0 8px rgba(239,68,68,0); }
+    0%,100% { box-shadow: 0 0 0 0 var(--pulse-color, rgba(239,68,68,0.6)); }
+    50%     { box-shadow: 0 0 0 var(--pulse-spread, 8px) transparent; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pulse-ring { animation: none; }
   }
 
   .spin-slow { animation: spin-anim 1s linear infinite; }
