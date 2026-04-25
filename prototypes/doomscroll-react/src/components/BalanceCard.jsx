@@ -6,8 +6,11 @@
  * @param {number} props.earnedBalance - Total minutes earned today across all enabled activities.
  * @param {Array<{id: string, label: string, detail: string, minutes: number}>} props.activeActivities
  *   Filtered list of earning activities that are currently enabled.
+ * @param {function} [props.onManageActivities] - Optional click handler for the "Manage" link.
+ *   When provided, the activities list becomes a tappable shortcut to the dashboard's
+ *   earning-activities settings.
  */
-export default function BalanceCard({ earnedBalance, activeActivities }) {
+export default function BalanceCard({ earnedBalance, activeActivities, onManageActivities }) {
   return (
     <div className="mx-5 mb-5 rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 p-5">
       <div className="flex items-start justify-between mb-4">
@@ -36,6 +39,18 @@ export default function BalanceCard({ earnedBalance, activeActivities }) {
           </div>
         ))}
       </div>
+      {onManageActivities && (
+        <button
+          onClick={onManageActivities}
+          className="mt-3 w-full text-xs font-semibold text-blue-600 hover:text-blue-700 flex items-center justify-center gap-1 py-1.5 rounded-lg hover:bg-blue-200/40 transition-colors"
+          aria-label="Manage earning activities"
+        >
+          Manage activities
+          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      )}
     </div>
   );
 }

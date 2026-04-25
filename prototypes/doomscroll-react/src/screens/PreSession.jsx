@@ -69,7 +69,13 @@ export default function PreSession() {
       </div>
 
       {/* Balance card — shows earned minutes and contributing activities */}
-      <BalanceCard earnedBalance={earnedBalance} activeActivities={activeActivities} />
+      <BalanceCard
+        earnedBalance={earnedBalance}
+        activeActivities={activeActivities}
+        onManageActivities={() =>
+          dispatch({ type: 'SET_SCREEN', screen: 'dashboard', focus: 'earningActivities' })
+        }
+      />
 
       {/* Intention chip selector + freeform input */}
       <IntentionList />

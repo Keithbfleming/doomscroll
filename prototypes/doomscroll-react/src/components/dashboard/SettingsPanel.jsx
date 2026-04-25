@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Toggle } from '../ui';
 import { CollapsibleSection } from '../ui';
+import { useApp } from '../../context/AppContext';
 
 /**
  * Collapsible settings panel rendered as a card inside the Dashboard.
@@ -13,9 +14,35 @@ import { CollapsibleSection } from '../ui';
  * @param {function} props.dispatch - AppContext dispatch function.
  */
 export default function SettingsPanel({ persisted, dispatch }) {
+  const { state } = useApp();
   const [open, setOpen] = useState(false);
   const [activitiesOpen, setActivitiesOpen] = useState(false);
   const [saved, setSaved] = useState(false); // drives the toast
+  const [highlightActivities, setHighlightActivities] = useState(false);
+  const activitiesRef = useRef(null);
+  const panelRef = useRef(null);
+
+  // Consume the one-shot dashboardFocus hint set by BalanceCard's "Manage activities"
+  // shortcut. Auto-expands both Settings and the Earning Activities subsection,
+  // scrolls them into view, and briefly highlights the section so users see where
+  // they landed. The hint is cleared so subsequent visits don't re-trigger.
+  useEffect(() => {
+    if (state.dashboardFocus !== 'earningActivities') return;
+    setOpen(true);
+    setActivitiesOpen(true);
+    setHighlightActivities(true);
+    // Defer scroll until after the collapsible expand animation has had a tick to start
+    const scrollTimer = setTimeout(() => {
+      const target = activitiesRef.current || panelRef.current;
+      target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 50);
+    const highlightTimer = setTimeout(() => setHighlightActivities(false), 2200);
+    dispatch({ type: 'CLEAR_DASHBOARD_FOCUS' });
+    return () => {
+      clearTimeout(scrollTimer);
+      clearTimeout(highlightTimer);
+    };
+  }, [state.dashboardFocus, dispatch]);
 
   const {
     enablePreSession,
@@ -40,7 +67,7 @@ export default function SettingsPanel({ persisted, dispatch }) {
   const enabledCount = earningActivities.filter(a => a.enabled).length;
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+    <div ref={panelRef} className="bg-white rounded-2xl border border-gray-100 overflow-hidden scroll-mt-4">
       {/* Collapsible header — chevron rotates when open */}
       <button
         onClick={() => setOpen(o => !o)}
@@ -119,7 +146,10 @@ export default function SettingsPanel({ persisted, dispatch }) {
 
 
           {/* Earning activities — collapsible sub-section, collapsed by default */}
-          <div className="border-t border-gray-100 pt-4">
+          <div
+            ref={activitiesRef}
+            className={`border-t border-gray-100 pt-4 -mx-2 px-2 rounded-lg transition-colors duration-700 ${highlightActivities ? 'bg-blue-50 ring-2 ring-blue-200' : ''}`}
+          >
             <button
               onClick={() => setActivitiesOpen(o => !o)}
               className="w-full flex items-center justify-between"

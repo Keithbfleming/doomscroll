@@ -30,6 +30,8 @@ const INITIAL = {
   prevScreen: null,
   /** Loaded from localStorage; null until hydration is complete */
   persisted: null,
+  /** Optional focus hint consumed by Dashboard sub-panels (e.g. 'earningActivities'). */
+  dashboardFocus: null,
   /** Live session state — reset to defaults on each START_SESSION */
   session: {
     running: false,
@@ -62,9 +64,19 @@ function reducer(state, action) {
     case 'LOAD':
       return { ...state, persisted: action.payload };
 
-    // Navigate to a named screen, recording the current one for GO_BACK
+    // Navigate to a named screen, recording the current one for GO_BACK.
+    // Optional `focus` hint lets the destination screen scroll/expand a specific section.
     case 'SET_SCREEN':
-      return { ...state, screen: action.screen, prevScreen: state.screen };
+      return {
+        ...state,
+        screen: action.screen,
+        prevScreen: state.screen,
+        dashboardFocus: action.focus ?? null,
+      };
+
+    // Clear the one-shot dashboard focus hint after a sub-panel has consumed it.
+    case 'CLEAR_DASHBOARD_FOCUS':
+      return { ...state, dashboardFocus: null };
 
     // Navigate back one level (falls back to preSession if no history)
     case 'GO_BACK':
