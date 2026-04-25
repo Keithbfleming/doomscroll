@@ -260,7 +260,7 @@ function startSessionTimer() {
     const fillEl = document.getElementById('timerBarFill');
     const textEl = document.getElementById('timerText');
     const totalSeconds = balanceSeconds;
-    const SPEED = 30;
+    const SPEED = 6;
 
     sessionInterval = setInterval(() => {
         balanceSeconds -= SPEED;
