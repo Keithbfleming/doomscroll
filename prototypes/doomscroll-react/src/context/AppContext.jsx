@@ -36,6 +36,7 @@ const INITIAL = {
   session: {
     running: false,
     startTime: null,      // Date.now() snapshot when session started
+    pausedAt: null,       // Date.now() snapshot when timer was paused (e.g. SessionPanel open); null when running
     elapsedSec: 0,        // real seconds elapsed, computed from Date.now() delta to avoid drift
     postCount: 0,
     videoCount: 0,
@@ -48,6 +49,32 @@ const INITIAL = {
   intentions: [],
   customIntention: '',
 };
+
+/**
+ * Pauses or resumes the session clock without losing accumulated elapsed time.
+ * On pause: records the current Date.now() in pausedAt and freezes elapsedSec.
+ * On resume: shifts startTime forward by the paused duration so the next TICK
+ * reads the same elapsedSec the timer had when it paused.
+ * No-op if the session isn't running or the requested state already matches.
+ *
+ * @param {object} session - Current session slice.
+ * @param {boolean} pause - true to pause, false to resume.
+ * @returns {object} New session slice.
+ */
+function pauseOrResume(session, pause) {
+  if (!session.running || !session.startTime) return session;
+  if (pause && session.pausedAt) return session;       // already paused
+  if (!pause && !session.pausedAt) return session;     // already running
+  if (pause) {
+    return { ...session, pausedAt: Date.now() };
+  }
+  const pausedDuration = Date.now() - session.pausedAt;
+  return {
+    ...session,
+    startTime: session.startTime + pausedDuration,
+    pausedAt: null,
+  };
+}
 
 /**
  * Pure reducer that handles all application state transitions.
@@ -116,6 +143,7 @@ function reducer(state, action) {
           ...state.session,
           running: true,
           startTime: Date.now(),
+          pausedAt: null,
           elapsedSec: 0,
           postCount: 0,
           videoCount: 0,
@@ -152,13 +180,21 @@ function reducer(state, action) {
       };
     }
 
-    // Toggle the slide-up session summary panel
-    case 'TOGGLE_SESSION_PANEL':
-      return { ...state, showSessionPanel: !state.showSessionPanel };
+    // Toggle the slide-up session summary panel.
+    // Opening pauses the session timer; closing resumes it without losing time
+    // by shifting startTime forward by the paused duration.
+    case 'TOGGLE_SESSION_PANEL': {
+      const opening = !state.showSessionPanel;
+      const session = pauseOrResume(state.session, opening);
+      return { ...state, showSessionPanel: opening, session };
+    }
 
-    // Close the session panel without ending the session
-    case 'CLOSE_SESSION_PANEL':
-      return { ...state, showSessionPanel: false };
+    // Close the session panel without ending the session.
+    // Always resumes the timer if it was paused.
+    case 'CLOSE_SESSION_PANEL': {
+      const session = pauseOrResume(state.session, false);
+      return { ...state, showSessionPanel: false, session };
+    }
 
     // Save the user's post-session mood and persist immediately
     case 'SET_MOOD': {
@@ -237,12 +273,14 @@ export function AppProvider({ children }) {
     dispatch({ type: 'LOAD', payload: persisted });
   }, []);
 
-  // Session timer: dedicated effect that watches only session.running.
-  // Guarding against double-start prevents duplicate intervals if React
-  // batches re-renders or StrictMode double-invokes effects in development.
+  // Session timer: dedicated effect that watches session.running AND session.pausedAt.
+  // Pausing (e.g. when SessionPanel opens) clears the interval; resuming starts a fresh one.
+  // Guarding against double-start prevents duplicate intervals if React batches re-renders
+  // or StrictMode double-invokes effects in development.
   useEffect(() => {
-    if (!state.session.running) {
-      // Clear interval when the session stops
+    const isPaused = state.session.pausedAt !== null;
+    if (!state.session.running || isPaused) {
+      // Clear interval when the session stops or is paused
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
         intervalRef.current = null;
@@ -264,7 +302,7 @@ export function AppProvider({ children }) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     };
-  }, [state.session.running]);
+  }, [state.session.running, state.session.pausedAt]);
 
   return (
     <AppContext.Provider value={{ state, dispatch }}>
