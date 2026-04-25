@@ -4,6 +4,14 @@ import { loadState, saveState, addSessionMinutes, setTodayMood } from '../lib/st
 const AppContext = createContext(null);
 
 /**
+ * Demo speed multiplier — 1 = real time, >1 = compressed time for recorded demos.
+ * Applied in the TICK reducer so all consumers (TimerBar, HealthIcon, opportunity
+ * costs, end-session minute totals) inherit the sped-up clock automatically.
+ * Set to 1 before shipping to real users.
+ */
+export const SPEED = 6;
+
+/**
  * Screens the app can display.
  * 'homescreen' — fake iPhone home screen (used when user "closes" the app)
  * 'preSession'  — intention + balance check before opening the feed
@@ -107,13 +115,14 @@ function reducer(state, action) {
       };
 
     // Advance the session clock — elapsed is recomputed from Date.now() delta,
-    // not a simple counter, so background throttling or tab suspension won't cause drift
+    // not a simple counter, so background throttling or tab suspension won't cause drift.
+    // Multiplied by SPEED to support sped-up demo recordings (SPEED=1 in production).
     case 'TICK':
       return {
         ...state,
         session: {
           ...state.session,
-          elapsedSec: Math.floor((Date.now() - state.session.startTime) / 1000),
+          elapsedSec: Math.floor(((Date.now() - state.session.startTime) / 1000) * SPEED),
         },
       };
 

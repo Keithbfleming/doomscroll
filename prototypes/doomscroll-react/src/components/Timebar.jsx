@@ -1,4 +1,4 @@
-import { useApp } from '../context/AppContext';
+import { useApp, SPEED } from '../context/AppContext';
 
 /**
  * Thin progress bar shown below the feed header during an active session.
@@ -34,7 +34,7 @@ export default function TimerBar() {
         <span className={`text-[12px] font-medium ${isOver ? 'text-red-500' : 'text-gray-500'}`}>
           {isOver
             ? 'Time exceeded'
-            : `${remMins}:${String(remSecs).padStart(2, '0')} remaining`
+            : `${remMins}:${String(remSecs).padStart(2, '0')} remaining${SPEED > 1 ? ` · ${SPEED}x` : ''}`
           }
         </span>
       </div>
